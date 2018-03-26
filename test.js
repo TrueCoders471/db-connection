@@ -32,6 +32,9 @@ app.post('/login', (req, res) => {
             else res.sendStatus(401)
         })
 })
+//FOR testing on localhost
+// app.listen(7555, () => {
 app.listen(443, () => {
-    console.log('Server running on http://localhost:7555')
+    //console.log('Server running on http://localhost:7555')
+    console.log('Server running on http://137.45.220.128:443')
 })
