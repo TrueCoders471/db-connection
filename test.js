@@ -42,26 +42,44 @@ app.post('/login', (req, res) => {
         })
 });
 
-app.post('/uploadFile', (req, res) => {
+app.post('/uploadDocument', (req, res) => {
     console.log(req.body);
     const file = req.files.file;
     const title = req.body.title;
     const fileDate = req.body.fileDate;
     const isFillable = req.body.isFillable;
-
     console.log("file text: " + file.data.toString());
     console.log(title);
     console.log(fileDate);
     console.log(isFillable);
-    store
-         .uploadFile({
-            title: title,
-            version: fileDate,
-            file: file.data,
-             is_fillable: isFillable
-        })
-        .then(() => res.sendStatus(200))
 
+        store
+            .uploadDocument({
+                title: title,
+                version: fileDate,
+                file: file.data,
+                is_fillable: isFillable
+            })
+            .then(() => res.sendStatus(200))
+});
+
+
+app.post('/uploadNote', (req, res) => {
+    console.log(req.body);
+    const file = req.files.file;
+    const title = req.body.title;
+    const fileDate = req.body.date_submitted;
+console.log("file text: " + file.data.toString());
+console.log(title);
+console.log(fileDate);
+        store
+            .uploadNote({
+                title: title,
+                course_number: title,
+                date_submitted: fileDate,
+                file: file.data,
+            })
+            .then(() => res.sendStatus(200))
 
 });
 
@@ -84,6 +102,18 @@ app.post('/loadDocuments', (req, res) => {
     .then((documents) => {
     res.setHeader('Content-Type', 'application/json');
     res.send(documents);
+    })
+});
+
+
+app.post('/loadNotes', (req, res) => {
+    store.
+        loadNotes({
+            course_number: req.body.course_number
+        })
+    .then((notes) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(notes);
     })
 });
 

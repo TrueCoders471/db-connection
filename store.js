@@ -29,8 +29,8 @@ module.exports = {
             });
     },
 
-    uploadFile({title, version, file, is_fillable}) {
-        console.log(`Uploading file ${title}`);
+    uploadDocument({title, version, file, is_fillable}) {
+        console.log(`Uploading document ${title}`);
         console.log(file);
         console.log(is_fillable);
         return knex('cas.documents').insert({
@@ -38,6 +38,16 @@ module.exports = {
             version,
             file,
             is_fillable
+        });
+    },
+    uploadNote({course_number, title, date_submitted, file}) {
+        console.log(`Uploading notes ${title}`);
+        console.log(file);
+        return knex('notes').insert({
+            course_number,
+            title,
+            date_submitted,
+            file,
         });
     },
 
@@ -50,5 +60,11 @@ module.exports = {
         console.log("Loading Documents");
         console.log(is_fillable);
         return knex('cas.documents').where({is_fillable});
+    },
+
+    loadNotes({course_number}){
+        console.log("Loading Notes");
+        console.log(course_number);
+        return knex('notes').where({course_number});
     }
 };
