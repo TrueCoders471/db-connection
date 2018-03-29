@@ -23,7 +23,8 @@ app.post('/createUser', (req, res) => {
             first_name: req.body.fName,
             last_name: req.body.lName,
             email: req.body.email,
-            password: req.body.password
+            password: req.body.password,
+            role: req.body.role
         })
         .then(() => res.sendStatus(200))
 });
@@ -43,13 +44,25 @@ app.post('/login', (req, res) => {
 
 app.post('/uploadFile', (req, res) => {
     console.log(req.body);
+    const file = req.files.file;
+    const title = req.body.title;
+    const fileDate = req.body.fileDate;
+    const isFillable = req.body.isFillable;
+
+    console.log("file text: " + file.data.toString());
+    console.log(title);
+    console.log(fileDate);
+    console.log(isFillable);
     store
          .uploadFile({
-            title: req.body.fileName,
-            version: req.body.fileDate,
-            file: req.body.file
+            title: title,
+            version: fileDate,
+            file: file.data,
+             is_fillable: isFillable
         })
         .then(() => res.sendStatus(200))
+
+
 });
 
 app.post('/loadUsers', (req, res) => {
@@ -63,6 +76,16 @@ app.post('/loadUsers', (req, res) => {
     })
 });
 
+app.post('/loadDocuments', (req, res) => {
+    store.
+        loadDocuments({
+            is_fillable: req.body.is_fillable
+        })
+    .then((documents) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(documents);
+    })
+});
 
 //FOR testing on localhost
  app.listen(7555, () => {

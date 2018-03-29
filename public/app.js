@@ -6,7 +6,8 @@
      const fName = CreateUser.querySelector('.fName').value;
      const lName = CreateUser.querySelector('.lName').value;
      const email = CreateUser.querySelector('.email').value;
-     post('/createUser', { fName, lName, email, username, password })
+     const role = CreateUser.querySelector('.role').value;
+     post('/createUser', { fName, lName, email, username, password, role })
  });
 
 const Login = document.querySelector('.Login');
@@ -29,7 +30,7 @@ UploadFile.addEventListener('submit', (e) => {
     var fileField = document.querySelector("input[type='file']").files;
     var file = fileField[0];
     var fileName = fileField[0].name;
-    var fileDate = fileField[0].lastModifiedDate.toDateString();
+    var fileDate = fileField[0].lastModifiedDate.toString();
 
  console.log(file);
  console.log(fileName);
@@ -45,8 +46,6 @@ const LoadUsers = document.querySelector('.LoadUsers');
 LoadUsers.addEventListener('submit', (e) => {
     e.preventDefault();
     const role = LoadUsers.querySelector('.role').value;
-    console.log(role);
-
     post('/loadUsers', {role} )
         .then((res) => {
             if (res.status === 200)
@@ -64,13 +63,6 @@ function post(path, data) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify(data)
-    })
-}
-
-function put(path, data){
-    return window.fetch(path, {
-        method: 'PUT',
         body: JSON.stringify(data)
     })
 }
