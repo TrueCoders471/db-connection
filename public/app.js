@@ -1,6 +1,6 @@
- const CreateUser = document.querySelector('.CreateUser')
+ const CreateUser = document.querySelector('.CreateUser');
  CreateUser.addEventListener('submit', (e) => {
-     e.preventDefault()
+     e.preventDefault();
      const username = CreateUser.querySelector('.username').value;
      const password = CreateUser.querySelector('.password').value;
      const fName = CreateUser.querySelector('.fName').value;
@@ -9,7 +9,7 @@
      post('/createUser', { fName, lName, email, username, password })
  });
 
-const Login = document.querySelector('.Login')
+const Login = document.querySelector('.Login');
 Login.addEventListener('submit', (e) => {
     e.preventDefault();
     const username = Login.querySelector('.username').value;
@@ -23,6 +23,40 @@ Login.addEventListener('submit', (e) => {
         })
 });
 
+const UploadFile = document.querySelector('.UploadFile');
+UploadFile.addEventListener('submit', (e) => {
+    e.preventDefault();
+    var fileField = document.querySelector("input[type='file']").files;
+    var file = fileField[0];
+    var fileName = fileField[0].name;
+    var fileDate = fileField[0].lastModifiedDate.toDateString();
+
+ console.log(file);
+ console.log(fileName);
+ console.log(fileDate);
+    post('/uploadFile', {fileName,  fileDate, file})
+        .then(response => response.json())
+         .catch(error => console.error('Error:', error))
+         .then(response => console.log('Success:', response));
+    // console.log(formData);
+});
+
+const LoadUsers = document.querySelector('.LoadUsers');
+LoadUsers.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const role = LoadUsers.querySelector('.role').value;
+    console.log(role);
+
+    post('/loadUsers', {role} )
+        .then((res) => {
+            if (res.status === 200)
+                res.text().then(function (text) {
+        console.log(text);
+            })
+            else alert('no matching users')
+        })
+});
+
 function post(path, data) {
     return window.fetch(path, {
         method: 'POST',
@@ -30,6 +64,13 @@ function post(path, data) {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
+        body: JSON.stringify(data)
+    })
+}
+
+function put(path, data){
+    return window.fetch(path, {
+        method: 'PUT',
         body: JSON.stringify(data)
     })
 }

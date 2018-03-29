@@ -9,7 +9,7 @@ module.exports = {
             last_name,
             email,
             password
-        })
+        });
     },
 
     authenticate({username, password}) {
@@ -25,6 +25,21 @@ module.exports = {
                 else{
                     return {success: false, user: null}
                 }
-            })
+            });
+    },
+
+    uploadFile({title, version, file}) {
+        console.log(`Uploading file ${title}`);
+        //console.log(file.valueOf());
+        return knex('documents').insert({
+            title,
+            version,
+            file
+        });
+    },
+
+    loadUsers({role}){
+        console.log(`Loading all users:  ${role}`);
+        return knex('users').where({role});
     }
 };
