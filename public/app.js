@@ -51,10 +51,38 @@ LoadUsers.addEventListener('submit', (e) => {
             if (res.status === 200)
                 res.text().then(function (text) {
         console.log(text);
-            })
-            else alert('no matching users')
+            });
+            else alert('no matching users');
         })
 });
+
+const LoadCourses = document.querySelector('.LoadCourses');
+LoadCourses.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const subject_name = LoadCourses.querySelector('.subject').value;
+    post('/loadCourses', {subject_name} )
+        .then((res) => {
+            if(res.status === 200)
+                res.text().then(function (text) {
+                    console.log(text);
+                });
+            else alert ('no courses');
+        })
+});
+
+ // const LoadCourses = document.querySelector('.LoadCourses');
+ // LoadCourses.addEventListener('submit', (e) => {
+ //     e.preventDefault();
+ //     //const subject_name = LoadCourses.querySelector('.subject').value;
+ //     post('/loadSubjects')
+ //         .then((res) => {
+ //             if(res.status === 200)
+ //                 res.text().then(function (text) {
+ //                     console.log(text);
+ //                 });
+ //             else alert ('no courses');
+ //         })
+ // });
 
 function post(path, data) {
     return window.fetch(path, {

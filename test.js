@@ -4,7 +4,6 @@ const fileUpload = require('express-fileupload');
 const store = require('./store');
 const app = express();
 const cors = require('cors');
-const fs = require('fs');
 
 app.use(cors());
 app.use(express.static('public'));
@@ -29,7 +28,35 @@ app.post('/createUser', (req, res) => {
         .then(() => res.sendStatus(200))
 });
 
+app.post('/registerVolunteer', (req, res) => {
+    store
+        .registerVolunteer({
+            username: req.body.username,
+            password: req.body.password,
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            phone: req.body.phone,
+            ru_id: req.body.ru_id,
+            role: 'notetaker'
+        })
+        .then(() => res.sendStatus(200))
+});
+
 app.post('/login', (req, res) => {
+    console.log(req.body);
+    store
+        .authenticate({
+            username: req.body.username,
+            password: req.body.password,
+        })
+        .then(({ success, user }) => {
+            if (success) res.status(200).send(user.role); //redirect
+            else res.sendStatus(401)
+        })
+});
+
+app.post('/login2', (req, res) => {
     console.log(req.body);
     store
         .authenticate({
@@ -117,9 +144,30 @@ app.post('/loadNotes', (req, res) => {
     })
 });
 
+app.post('/loadCourses', (req, res) => {
+    console.log(req.body);
+    store.
+        loadCourses({
+        subject_name: req.body.subject_name
+    })
+    .then((courses) => {
+    res.setHeader('Content-Type', 'application/json');
+    res.send(courses);
+    })
+});
+
+app.post('/loadSubjects', (req, res) => {
+    store.
+        loadSubjects()
+        .then((subjects) => {
+        res.setHeader('Content-Type', 'application/json');
+        res.send(subjects);
+        })
+});
+
 //FOR testing on localhost
-// app.listen(7555, () => {
-app.listen(443, () => {
-    //console.log('Server running on http://localhost:7555')
-    console.log('Server running on http://137.45.220.128:443')
+ app.listen(7555, () => {
+//app.listen(443, () => {
+    console.log('Server running on http://localhost:7555')
+    //console.log('Server running on http://137.45.220.128:443')
 })

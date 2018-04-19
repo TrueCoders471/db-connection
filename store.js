@@ -13,6 +13,20 @@ module.exports = {
         });
     },
 
+    registerVolunteer({first_name, last_name, email, phone, ru_id, role, username, password}){
+        console.log(`Registering volunteer: ${username}`);
+        return knex('users').insert({
+            username,
+            password,
+            first_name,
+            last_name,
+            email,
+            phone,
+            ru_id,
+            role
+        })
+    },
+
     authenticate({username, password}) {
         console.log(`Authenticating user ${username}`);
         return knex('users').where({username})
@@ -63,8 +77,17 @@ module.exports = {
     },
 
     loadNotes({course_number}){
-        console.log("Loading Notes");
-        console.log(course_number);
+        console.log(`Loading Notes for ${course_number}`);
         return knex('notes').where({course_number});
+    },
+
+    loadCourses({subject_name}){
+        console.log(`Loading courses for: ${subject_name}`);
+        return knex('courses').where({subject_name});
+    },
+
+    loadSubjects(){
+        console.log(`Loading all subjects `);
+        return knex('subjects');
     }
 };
