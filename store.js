@@ -13,8 +13,8 @@ module.exports = {
         });
     },
 
-    registerVolunteer({first_name, last_name, email, phone, ru_id, role, username, password}){
-        console.log(`Registering volunteer: ${username}`);
+    registerUser({first_name, last_name, email, phone, ru_id, username, password, birth_date, gender, role, street, res_hall, room, city, state, zip, standing, time, major, graduation}) {
+        console.log(`Registering user: ${username}`);
         return knex('users').insert({
             username,
             password,
@@ -23,7 +23,19 @@ module.exports = {
             email,
             phone,
             ru_id,
-            role
+            birth_date,
+            gender,
+            role,
+            street,
+            res_hall,
+            room,
+            city,
+            state,
+            zip,
+            standing,
+            time,
+            major,
+            graduation
         })
     },
 
@@ -37,7 +49,7 @@ module.exports = {
                 if (password === user.password) {
                     return {success: true, user: user}
                 }
-                else{
+                else {
                     return {success: false, user: null}
                 }
             });
@@ -65,28 +77,28 @@ module.exports = {
         });
     },
 
-    loadUsers({role}){
+    loadUsers({role}) {
         console.log(`Loading all users:  ${role}`);
         return knex('users').where({role});
     },
 
-    loadDocuments({is_fillable}){
+    loadDocuments({is_fillable}) {
         console.log("Loading Documents");
         console.log(is_fillable);
         return knex('cas.documents').where({is_fillable});
     },
 
-    loadNotes({course_number}){
+    loadNotes({course_number}) {
         console.log(`Loading Notes for ${course_number}`);
         return knex('notes').where({course_number});
     },
 
-    loadCourses({subject_name}){
+    loadCourses({subject_name}) {
         console.log(`Loading courses for: ${subject_name}`);
         return knex('courses').where({subject_name});
     },
 
-    loadSubjects(){
+    loadSubjects() {
         console.log(`Loading all subjects `);
         return knex('subjects');
     }
