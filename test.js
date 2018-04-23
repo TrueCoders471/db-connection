@@ -27,11 +27,11 @@ app.post('/createUser', (req, res) => {
         .then(() => res.sendStatus(200))
 });
 
-app.post('/registerUser', (req, res) => {
+app.post('/registerStudent', (req, res) => {
     let room_ = req.body.room === '' ? 0 : room;
     let zip_ = req.body.zip === '' ? 0 : zip;
     store
-        .registerUser({
+        .registerStudent({
             username: req.body.username,
             password: req.body.password,
             first_name: req.body.first_name,
@@ -52,6 +52,36 @@ app.post('/registerUser', (req, res) => {
             time: req.body.time,
             major: req.body.major,
             graduation: req.body.graduation
+        })
+        .then(() => res.sendStatus(200))
+});
+
+app.post('/registerVolunteer', (req, res) => {
+    store
+        .registerVolunteer({
+            username: req.body.username,
+            password: req.body.password,
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            phone: req.body.phone,
+            ru_id: req.body.ru_id,
+            role: req.body.role,
+        })
+        .then(() => res.sendStatus(200))
+});
+
+app.post('/registerFaculty', (req, res) => {
+    store
+        .registerFaculty({
+            username: req.body.username,
+            password: req.body.password,
+            first_name: req.body.first_name,
+            last_name: req.body.last_name,
+            email: req.body.email,
+            phone: req.body.phone,
+            ru_id: req.body.ru_id,
+            role: req.body.role,
         })
         .then(() => res.sendStatus(200))
 });
