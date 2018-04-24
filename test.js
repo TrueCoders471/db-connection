@@ -86,6 +86,15 @@ app.post('/registerFaculty', (req, res) => {
         .then(() => res.sendStatus(200))
 });
 
+app.post('/addCourse', (req, res) => {
+    store
+        .addCourse({
+            ru_id: req.body.ru_id,
+            course: req.body.course,
+        })
+        .then(() => res.sendStatus(200))
+});
+
 app.post('/login', (req, res) => {
     console.log(req.body);
     store

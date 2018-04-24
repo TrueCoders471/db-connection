@@ -67,6 +67,14 @@ module.exports = {
         })
     },
 
+    addCourse({ru_id, course}){
+        console.log(`Adding course ${course} to ${ru_id}`);
+        return knex('faculty_courses').insert({
+            ru_id,
+            course
+        })
+    },
+
     authenticate({username, password}) {
         console.log(`Authenticating user ${username}`);
         return knex('users').where({username})
