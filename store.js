@@ -14,7 +14,7 @@ module.exports = {
     },
 
     registerStudent({first_name, last_name, email, phone, ru_id, username, password, birth_date, gender, role, street, res_hall, room, city, state, zip, standing, time, major, graduation}) {
-        console.log(`Registering user: ${username}`);
+        console.log(`Registering student: ${username}`);
         return knex('users').insert({
             username,
             password,
@@ -55,6 +55,20 @@ module.exports = {
 
     registerFaculty({username, password, first_name, last_name, email, phone, ru_id, role}){
         console.log(`Registering faculty: ${username}`);
+        return knex('users').insert({
+            username,
+            password,
+            first_name,
+            last_name,
+            email,
+            phone,
+            ru_id,
+            role
+        })
+    },
+
+    registerAdmin({username, password, first_name, last_name, email, phone, ru_id, role}){
+        console.log(`Registering admin: ${username}`);
         return knex('users').insert({
             username,
             password,

@@ -86,6 +86,21 @@ app.post('/registerFaculty', (req, res) => {
         .then(() => res.sendStatus(200))
 });
 
+app.post('/registerAdmin', (req, res) => {
+    store
+    .registerAdmin({
+        username: req.body.username,
+        password: req.body.password,
+        first_name: req.body.first_name,
+        last_name: req.body.last_name,
+        email: req.body.email,
+        phone: req.body.phone,
+        ru_id: req.body.ru_id,
+        role: req.body.role,
+    })
+    .then(() => res.sendStatus(200))
+});
+
 app.post('/addCourse', (req, res) => {
     store
         .addCourse({
@@ -214,8 +229,8 @@ app.post('/loadSubjects', (req, res) => {
 });
 
 //FOR testing on localhost
-//app.listen(7555, () => {
-app.listen(443, () => {
-    //console.log('Server running on http://localhost:7555')
-    console.log('Server running on http://137.45.220.128:443')
+app.listen(7555, () => {
+//app.listen(443, () => {
+    console.log('Server running on http://localhost:7555')
+    //console.log('Server running on http://137.45.220.128:443')
 })
