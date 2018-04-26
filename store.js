@@ -13,7 +13,7 @@ module.exports = {
         });
     },
 
-    registerStudent({first_name, last_name, email, phone, ru_id, username, password, birth_date, gender, role, street, res_hall, room, city, state, zip, standing, time, major, graduation}) {
+    registerStudent({first_name, last_name, email, phone, ru_id, username, password, birth_date, gender, role, street, res_hall, room, city, state, zip, standing, time, major, graduation, is_disabled}) {
         console.log(`Registering student: ${username}`);
         return knex('users').insert({
             username,
@@ -35,11 +35,12 @@ module.exports = {
             standing,
             time,
             major,
-            graduation
+            graduation,
+            is_disabled
         })
     },
 
-    registerVolunteer({username, password, first_name, last_name, email, phone, ru_id, role}){
+    registerVolunteer({username, password, first_name, last_name, email, phone, ru_id, role, is_disabled}){
         console.log(`Registering volunteer: ${username}`);
         return knex('users').insert({
             username,
@@ -49,11 +50,12 @@ module.exports = {
             email,
             phone,
             ru_id,
-            role
+            role,
+            is_disabled
         })
     },
 
-    registerFaculty({username, password, first_name, last_name, email, phone, ru_id, role}){
+    registerFaculty({username, password, first_name, last_name, email, phone, ru_id, role, is_disabled}){
         console.log(`Registering faculty: ${username}`);
         return knex('users').insert({
             username,
@@ -63,11 +65,12 @@ module.exports = {
             email,
             phone,
             ru_id,
-            role
+            role,
+            is_disabled
         })
     },
 
-    registerAdmin({username, password, first_name, last_name, email, phone, ru_id, role}){
+    registerAdmin({username, password, first_name, last_name, email, phone, ru_id, role, is_disabled}){
         console.log(`Registering admin: ${username}`);
         return knex('users').insert({
             username,
@@ -77,7 +80,8 @@ module.exports = {
             email,
             phone,
             ru_id,
-            role
+            role,
+            is_disabled
         })
     },
 
@@ -151,5 +155,11 @@ module.exports = {
     loadSubjects() {
         console.log(`Loading all subjects `);
         return knex('subjects');
+    },
+
+    disableUser({username}){
+        console.log(`disabling user ${username}`);
+        var user = knex('users').where({username});
+        user.update({is_disabled: 1});
     }
 };

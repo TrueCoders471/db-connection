@@ -51,7 +51,8 @@ app.post('/registerStudent', (req, res) => {
             standing: req.body.standing,
             time: req.body.time,
             major: req.body.major,
-            graduation: req.body.graduation
+            graduation: req.body.graduation,
+            is_disabled: 0,
         })
         .then(() => res.sendStatus(200))
 });
@@ -67,6 +68,7 @@ app.post('/registerVolunteer', (req, res) => {
             phone: req.body.phone,
             ru_id: req.body.ru_id,
             role: req.body.role,
+            is_disabled: 0,
         })
         .then(() => res.sendStatus(200))
 });
@@ -82,6 +84,7 @@ app.post('/registerFaculty', (req, res) => {
             phone: req.body.phone,
             ru_id: req.body.ru_id,
             role: req.body.role,
+            is_disabled: 0,
         })
         .then(() => res.sendStatus(200))
 });
@@ -97,6 +100,7 @@ app.post('/registerAdmin', (req, res) => {
         phone: req.body.phone,
         ru_id: req.body.ru_id,
         role: req.body.role,
+        is_disabled: 0,
     })
     .then(() => res.sendStatus(200))
 });
@@ -163,13 +167,14 @@ app.post('/uploadNote', (req, res) => {
     const file = req.files.file;
     const title = req.body.title;
     const fileDate = req.body.date_submitted;
+    const courseNumber = req.body.course_number;
     console.log("file text: " + file.data.toString());
     console.log(title);
     console.log(fileDate);
     store
         .uploadNote({
             title: title,
-            course_number: title,
+            course_number: courseNumber,
             date_submitted: fileDate,
             file: file.data,
         })
@@ -196,6 +201,12 @@ app.post('/loadDocuments', (req, res) => {
             res.setHeader('Content-Type', 'application/json');
             res.send(documents);
         })
+});
+
+app.post('/disableUser', (req, res) => {
+    store.disableUser({
+    username: req.body.username
+});
 });
 
 
