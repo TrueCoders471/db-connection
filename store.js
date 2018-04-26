@@ -159,7 +159,6 @@ module.exports = {
 
     disableUser({username}){
         console.log(`disabling user ${username}`);
-        var user = knex('users').where({username});
-        user.update({is_disabled: 1});
+        return knex('users').where({username}).update({is_disabled: 1});
     }
 };

@@ -206,7 +206,10 @@ app.post('/loadDocuments', (req, res) => {
 app.post('/disableUser', (req, res) => {
     store.disableUser({
     username: req.body.username
-});
+}).then((user) => {
+    res.setHeader('Content-Type', 'application/json');
+res.send(user);
+})
 });
 
 
